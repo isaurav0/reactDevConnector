@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-// var db = require('./keys.json');
+mongoose.set('debug', false)
 const config = require('config')
 const db = config.get('MONGO_URI')
 

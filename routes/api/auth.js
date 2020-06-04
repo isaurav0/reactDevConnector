@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const config = require('config')
 const secret = config.get('SECRET')
-const { authValidationRules, validate } = require('../../middleware/validator');
+const { authValidation, validate } = require('../../middleware/validator');
 
 // @route       /api/auth 
 // @desc        get user
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res)=>{
     }
 })
 
-router.post('/', authValidationRules(), validate, async (req, res)=>{
+router.post('/', authValidation(), validate, async (req, res)=>{
     
     const { email, password } = req.body
     

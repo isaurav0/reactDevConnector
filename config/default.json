@@ -1,4 +1,6 @@
 {
     "MONGO_URI":   "mongodb://localhost/devconnector", 
-    "SECRET": "fa;klsdjfalskdjf"
+    "SECRET": "fa;klsdjfalskdjf",
+    "GITHUBCLIENTID": "998aa92e0e9deef422c9",
+    "GITHUBSECRET": "739779795c6262d2943c0cea406c0c65c48ecb4f"
 }

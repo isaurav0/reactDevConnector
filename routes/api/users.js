@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const { registerValidationRules, validate } = require('../../middleware/validator');
+const { registerValidation, validate } = require('../../middleware/validator');
 const User = require('../../models/User')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
@@ -16,7 +16,7 @@ router.get('/', async (req, res)=>{
     res.send("users")
 })
 
-router.post('/', registerValidationRules(), validate, async (req, res)=>{
+router.post('/', registerValidation(), validate, async (req, res)=>{
     
     const { name, email, password } = req.body
     

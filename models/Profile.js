@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-mongoose.set('debug', true)
 
 const profileSchema = new mongoose.Schema({
     user: {
@@ -71,7 +70,7 @@ const profileSchema = new mongoose.Schema({
                 type: String, 
                 required: true
             }, 
-            fiedofstudy: {
+            fieldofstudy: {
                 type: String,
                 required: true
             },

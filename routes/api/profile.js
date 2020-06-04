@@ -1,9 +1,12 @@
-const express = require("express")
+const express = require("express");
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const Profile = require('../../models/Profile')
+const Profile = require('../../models/Profile');
 const User = require('../../models/User');
-const { profileValidationRules, validate } = require('../../middleware/validator');
+const { experienceValidation, validate } = require('../../middleware/validator');
+const { educationValidation, profileValidation } = require('../../middleware/validator');
+const config = require('config');
+const request = require('request');
 
 
 // @route       GET /api/profile/me
@@ -29,7 +32,7 @@ router.get('/me', auth, async (req, res)=>{
 // @desc        update/create user profile
 // @access      private
 
-router.post('/', [ auth, profileValidationRules(), validate ], async (req, res)=>{
+router.post('/', [ auth, profileValidation(), validate ], async (req, res)=>{
     try{
         const {
             company,
@@ -66,7 +69,7 @@ router.post('/', [ auth, profileValidationRules(), validate ], async (req, res)=
             let profile = await Profile.findOne({ user: req.user.id });
             if(profile){
                 profile = await Profile.findOneAndUpdate({ user: req.user.id },
-                    { $set: profileFields }, 
+                    { $set: profileFields },
                     { new: true }
                 );                
                 return res.status(200).json({profile, "msg": "updated profile"})                
@@ -104,7 +107,7 @@ router.get('/', async (req, res) => {
 
 // @route       GET /api/profile/user/user_id
 // @desc        Get profile by user id
-// @access      private
+// @access      public
 
 router.get('/user/:user_id', async (req, res) => {
     try {
@@ -142,6 +145,96 @@ router.delete('/', auth, async (req, res) => {
 })
 
 
+// @route       PUT /api/profile/education
+// @desc        Add profile education
+// @access      private
+
+router.put('/education', [ auth, educationValidation(), validate ] , async (req, res) => {
+    try {
+
+        const {
+            degree, 
+            school,
+            fieldofstudy, 
+            from,
+            to,
+            current,
+            description
+        } = req.body
+
+        const newEdu = {
+            degree, 
+            school,
+            fieldofstudy, 
+            from,
+            to,
+            current,
+            description
+        } 
+        console.log(newEdu)
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });        
+            profile.education.unshift(newEdu);
+            await profile.save()
+            return res.status(200).send({msg: "education Added."})
+        } catch (err) {
+            console.log(err)
+            return res.status(500).json({"msg": "Internal Server Error"})
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"msg": "Internal Server Error"})
+    }
+})
+
+
+
+// @route       DELETE /api/profile/education/edu_id
+// @desc        Add profile education
+// @access      private
+
+router.delete('/education/:edu_id', [ auth, educationValidation(), validate ] , async (req, res) => {
+    try {
+        const edu_id = req.params['edu_id']
+        const profile = await Profile.findOne({ user: req.user.id });
+        const removeIndex = profile.education.map(edu => edu.id).indexOf(edu_id)
+        profile.education.splice(removeIndex, 1)
+        await profile.save()
+        return res.status(200).send({msg: "education Removed."})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"msg": "Internal Server Error"})
+    }
+})
+
+
+// @route       GET /api/profile/github/:username
+// @desc        Get user repos from github
+// @access      Public
+
+router.get('/github/:username' , async (req, res) => {
+    try {
+        const options = {
+            uri: `https://api.github.com/users/${req.params['username']}/repos?per_page=5&sort=creat
+                ed:asc&client_id=${config.get('GITHUBCLIENTID')}&client_secret=${config.get('GITHUBSECRET')}`,
+            method: "GET",
+            headers: { 'user-agent': 'node.js'}
+        }
+
+        request(options, (err, response, body) => {
+            if(err) console.log(err)
+            if(response.statusCode != 200)
+                return res.status(404).json({msg: "Github Profile Not Found"})
+            return res.json(JSON.parse(body))
+        })
+
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"msg": "Internal Server Error"})
+    }
+})
 
 
 module.exports = router

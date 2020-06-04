@@ -1,5 +1,5 @@
 const { body, validationResult } = require('express-validator')
-const registerValidationRules = () => {
+const registerValidation = () => {
   return [
     // username must be an email
     body('email', "Invalid Email").isEmail(),
@@ -9,20 +9,47 @@ const registerValidationRules = () => {
   ]
 }
 
-const authValidationRules = () => {
+const authValidation = () => {
   return [
     body('email', "Invalid Email").isEmail(),
     body('password', "Password can't be empty").not().isEmpty(),
   ]
 }
 
-const profileValidationRules = () => {
+const profileValidation = () => {
   return [
     body('status', "Status is required.").not().isEmpty(),
     body('skills', "At least one skill is required.").not().isEmpty(),
   ]
 }
 
+const experienceValidation = () => {
+  return [
+    body('title', "Title is required.").not().isEmpty(),
+    body('company', "Company is required.").not().isEmpty(),
+    body('from', "From is required.").not().isEmpty(),
+    body('current', "Current is required.").not().isEmpty(),
+  ]
+}
+
+
+const educationValidation = () => {
+  return [
+    body('degree', "Degree is required.").not().isEmpty(),
+    body('school', "School is required.").not().isEmpty(),
+    body('fieldofstudy', "Field of study is required.").not().isEmpty(),
+    body('from', "From is required.").not().isEmpty(),
+    body('current', "Current is required.").not().isEmpty(),
+  ]
+}
+
+
+const postValidation = () => {
+  return [
+    body('name', "name is required.").not().isEmpty(),
+    body('text', "text is required.").not().isEmpty(),      
+  ]
+}
 
 const validate = (req, res, next) => {
   const errors = validationResult(req)
@@ -39,7 +66,10 @@ const validate = (req, res, next) => {
 
 module.exports = {
   validate,
-  registerValidationRules,
-  authValidationRules,
-  profileValidationRules
+  registerValidation,
+  authValidation,
+  profileValidation,
+  experienceValidation,
+  educationValidation,
+  postValidation
 }
