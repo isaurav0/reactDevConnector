@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-const config = require('./default.json')
+var db = require('./default.json')
 
-console.log(config)
+db = JSON.stringify(db)
 
 const connectDB = async () => {
     try{
-        await mongoose.connect(db);
+        await mongoose.connect(db, { useNewUrlParser: true});
         console.log("mongo connected ")
     }
     catch(err){
