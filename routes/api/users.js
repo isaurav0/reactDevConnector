@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const { registerValidationRules, validate } = require('../../utils/validator');
+const { registerValidationRules, validate } = require('../../middleware/validator');
 const User = require('../../models/User')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
@@ -8,6 +8,9 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 const secret = config.get('SECRET')
 
+// @route       /api/users 
+// @desc        Register user
+// @access      Public
 
 router.get('/', async (req, res)=>{
     res.send("users")

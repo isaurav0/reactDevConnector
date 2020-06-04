@@ -16,6 +16,14 @@ const authValidationRules = () => {
   ]
 }
 
+const profileValidationRules = () => {
+  return [
+    body('status', "Status is required.").not().isEmpty(),
+    body('skills', "At least one skill is required.").not().isEmpty(),
+  ]
+}
+
+
 const validate = (req, res, next) => {
   const errors = validationResult(req)
   if (errors.isEmpty()) {
@@ -30,7 +38,8 @@ const validate = (req, res, next) => {
 }
 
 module.exports = {
-  authValidationRules,
   validate,
-  registerValidationRules
+  registerValidationRules,
+  authValidationRules,
+  profileValidationRules
 }

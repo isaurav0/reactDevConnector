@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+mongoose.set('debug', true)
 
 const profileSchema = new mongoose.Schema({
     user: {
@@ -27,7 +28,86 @@ const profileSchema = new mongoose.Schema({
     }, 
     githubusername: {
         type: String
+    },
+    website: {
+        type: String
+    },
+    experience: [
+        {
+            title: {
+                type: String, 
+                required: true
+            }, 
+            company: {
+                type: String, 
+                required: true
+            }, 
+            location: {
+                type: String
+            },
+            from: {
+                type: Date, 
+                required: true
+            },
+            to: {
+                type: Date
+            },
+            current: {
+                type: Boolean,
+                default: false
+            }, 
+            description: {
+                type: String
+            }
+        }
+    ], 
+    education: [
+        {
+            degree: {
+                type: String, 
+                required: true
+            }, 
+            school: {
+                type: String, 
+                required: true
+            }, 
+            fiedofstudy: {
+                type: String,
+                required: true
+            },
+            from: {
+                type: Date, 
+                required: true
+            },
+            to: {
+                type: Date
+            },
+            current: {
+                type: Boolean,
+                default: false
+            }, 
+            description: {
+                type: String
+            }
+        }
+    ],
+    social: {
+        youtube: {
+            type: String
+        },
+        twitter: {
+            type: String
+        },
+        facebook: {
+            type: String
+        },
+        instagram: {
+            type: String
+        },
+        linkedin: {
+            type: String
+        }
     }
 })
 
-module.exports = Profile = mongoose.model('profile', userSchema);
+module.exports = Profile = mongoose.model('profile', profileSchema);
