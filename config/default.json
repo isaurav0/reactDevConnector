@@ -1,4 +1,4 @@
 {
     "MONGO_URI":   "mongodb://localhost/devconnector", 
-    "secret": "thisissecret"
+    "SECRET": "fa;klsdjfalskdjf"
 }

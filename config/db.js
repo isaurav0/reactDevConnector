@@ -1,12 +1,16 @@
 const mongoose = require('mongoose')
-var db = require('./default.json')
-
-db = JSON.stringify(db)
+// var db = require('./keys.json');
+const config = require('config')
+const db = config.get('MONGO_URI')
 
 const connectDB = async () => {
     try{
-        await mongoose.connect(db, { useNewUrlParser: true});
-        console.log("mongo connected ")
+        await mongoose.connect(db, { 
+            useNewUrlParser: true ,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        });
+        console.log("mongo connected")
     }
     catch(err){
         console.log(err)

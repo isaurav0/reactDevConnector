@@ -1,0 +1,23 @@
+const jwt = require('jsonwebtoken');
+
+const config = require('config');
+
+module.exports = function(req, res, next){
+
+    //get token
+    const token = req.header('x-auth-token');
+
+    if(!token){
+        return res.status(401).json({ msg: 'Unauthorized'})
+    }
+
+    try{
+        const decoded = jwt.verify(token, config.get('SECRET'))
+        req.user = decoded.user
+        return next()
+    }
+    catch(err){
+        return res.status(401).json({msg: "Invalid token"})
+    }
+
+}
