@@ -51,6 +51,12 @@ const postValidation = () => {
   ]
 }
 
+const commentValidation = () => {
+  return [
+    body('text', "Text is required.").not().isEmpty()
+  ]
+}
+
 const validate = (req, res, next) => {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -71,5 +77,6 @@ module.exports = {
   profileValidation,
   experienceValidation,
   educationValidation,
-  postValidation
+  postValidation,
+  commentValidation
 }
