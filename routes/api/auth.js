@@ -1,12 +1,15 @@
 const express = require("express")
-const router = express.Router();
-const auth = require('../../middleware/auth')
-const User = require('../../models/User')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const config = require('config')
+
+const router = express.Router();
 const secret = config.get('SECRET')
+
+const auth = require('../../middleware/auth')
 const { authValidation, validate } = require('../../middleware/validator');
+
+const User = require('../../models/User')
 
 // @route       /api/auth 
 // @desc        get user

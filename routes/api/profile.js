@@ -1,12 +1,15 @@
 const express = require("express");
-const router = express.Router();
-const auth = require('../../middleware/auth');
-const Profile = require('../../models/Profile');
-const User = require('../../models/User');
-const { experienceValidation, validate } = require('../../middleware/validator');
-const { educationValidation, profileValidation } = require('../../middleware/validator');
 const config = require('config');
 const request = require('request');
+const router = express.Router();
+
+const auth = require('../../middleware/auth');
+
+const Profile = require('../../models/Profile');
+const User = require('../../models/User');
+
+const { experienceValidation, validate } = require('../../middleware/validator');
+const { educationValidation, profileValidation } = require('../../middleware/validator');
 
 
 // @route       GET /api/profile/me
@@ -72,11 +75,11 @@ router.post('/', [ auth, profileValidation(), validate ], async (req, res)=>{
                     { $set: profileFields },
                     { new: true }
                 );                
-                return res.status(200).json({profile, "msg": "updated profile"})                
+                return res.status(200).json({profile, "msg": "Updated profile."})                
             }
             profile = new Profile(profileFields)
             profile.save()
-            return res.status(200).json({profile, "msg": "Profile created "})
+            return res.status(200).json({profile, "msg": "Profile created."})
         }
         catch(err){
             console.log(err)
@@ -114,12 +117,12 @@ router.get('/user/:user_id', async (req, res) => {
         user_id = req.params['user_id']
         const profile = await Profile.findOne({ user: user_id }).populate('user', ['name', 'avatar', 'email'])
         if(!profile)
-            return res.status(404).json({"msg": "Profile not found"})
+            return res.status(404).json({"msg": "Profile not found."})
         return res.status(200).json(profile)
     } catch (err) {
         console.log(err)
         if(err.kind == 'ObjectId'){
-            return res.status(404).json({"msg": "Profile not found"})
+            return res.status(404).json({"msg": "Profile not found."})
         }
         return res.status(500).json({"msg": "Internal Server Error"})
     }
@@ -137,7 +140,7 @@ router.delete('/', auth, async (req, res) => {
         //remove user
         await User.findOneAndRemove({ user: req.user.id })
 
-        return res.status(200).json({ msg: "user deleted"})
+        return res.status(200).json({ msg: "User deleted."})
     } catch (err) {
         console.log(err)
         res.status(500).json({"msg": "Internal Server Error"})
@@ -176,7 +179,7 @@ router.put('/education', [ auth, educationValidation(), validate ] , async (req,
             const profile = await Profile.findOne({ user: req.user.id });        
             profile.education.unshift(newEdu);
             await profile.save()
-            return res.status(200).send({msg: "education Added."})
+            return res.status(200).send({msg: "Education Added."})
         } catch (err) {
             console.log(err)
             return res.status(500).json({"msg": "Internal Server Error"})
@@ -200,7 +203,62 @@ router.delete('/education/:edu_id', [ auth, educationValidation(), validate ] , 
         const removeIndex = profile.education.map(edu => edu.id).indexOf(edu_id)
         profile.education.splice(removeIndex, 1)
         await profile.save()
-        return res.status(200).send({msg: "education Removed."})
+        return res.status(200).send({msg: "Education Removed."})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"msg": "Internal Server Error"})
+    }
+})
+
+
+// @route       PUT /api/profile/experience
+// @desc        Add profile experience
+// @access      private
+
+router.put('/experience', [ auth, experienceValidation(), validate ] , async (req, res) => {
+    try {
+
+        const {
+            title, 
+            company,
+            location, 
+            from,
+            to,
+            current,
+            description
+        } = req.body
+
+        const newExp = { title,  company, location,  from, to, current, description } 
+
+        try {
+            const profile = await Profile.findOne({ user: req.user.id });        
+            profile.experience.unshift(newExp);
+            await profile.save()
+            return res.status(200).send({msg: "Experience Added."})
+        } catch (err) {
+            // console.log(err)
+            return res.status(500).json({"msg": "Internal Server Error"})
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"msg": "Internal Server Error"})
+    }
+})
+
+
+
+// @route       DELETE /api/profile/experience/exp_id
+// @desc        Add profile experience
+// @access      private
+
+router.delete('/experience/:exp_id', [ auth, experienceValidation(), validate ] , async (req, res) => {
+    try {
+        const exp_id = req.params['exp_id']
+        const profile = await Profile.findOne({ user: req.user.id });
+        const removeIndex = profile.experience.map(exp => exp.id).indexOf(exp_id)
+        profile.experience.splice(removeIndex, 1)
+        await profile.save()
+        return res.status(200).send({msg: "Experience Removed."})
     } catch (err) {
         console.log(err)
         res.status(500).json({"msg": "Internal Server Error"})
@@ -227,8 +285,6 @@ router.get('/github/:username' , async (req, res) => {
                 return res.status(404).json({msg: "Github Profile Not Found"})
             return res.json(JSON.parse(body))
         })
-
-
 
     } catch (err) {
         console.log(err)
