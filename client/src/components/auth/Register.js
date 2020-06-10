@@ -27,7 +27,8 @@ const Register = ({ setAlert }) => {
             // console.log('dont match')
         else
         {
-            console.log(formData)
+            var data = JSON.stringify({name, email, password});
+            axios.post("/users")
         }        
     }
     

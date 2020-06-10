@@ -1,5 +1,6 @@
 {
-    "MONGO_URI":   "mongodb://localhost/devconnector", 
+    // "MONGO_URI":   "mongodb://localhost/devconnector", 
+    "MONGO_URI":   "mongodb+srv://dev:devpasswd@cluster0-abghj.mongodb.net/<dbname>?retryWrites=true&w=majority", 
     "SECRET": "fa;klsdjfalskdjf",
     "GITHUBCLIENTID": "998aa92e0e9deef422c9",
     "GITHUBSECRET": "739779795c6262d2943c0cea406c0c65c48ecb4f"
