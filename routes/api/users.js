@@ -51,7 +51,6 @@ router.post('/', registerValidation(), validate, async (req, res)=>{
         }
 
         const token = await jwt.sign(payload, secret, { expiresIn: 360000 })
-        console.log(token)
 
         res.status(200).json({ msg: "user registered", token })
     }

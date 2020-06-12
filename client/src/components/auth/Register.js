@@ -37,10 +37,10 @@ const Register = ({ setAlert, register }) => {
             <p className="lead"><i className="fa fa-user"></i> Create Your Account</p>
             <form className="form" onSubmit={e => onSubmit(e) }>
                 <div className="form-group">
-                    <input type="text" placeholder="Name" name="name" value={name} onChange={e => onChange(e) } required />
+                    <input type="text" placeholder="Name" name="name" value={name} onChange={e => onChange(e) }  />
                 </div>
                 <div className="form-group">
-                    <input type="email" placeholder="Email Address" name="email" value={email} onChange={e => onChange(e) } required/>                    
+                    <input type="email" placeholder="Email Address" name="email" value={email} onChange={e => onChange(e) } />                    
                 </div>
                 <div className="form-group">
                     <input
@@ -50,7 +50,7 @@ const Register = ({ setAlert, register }) => {
                         minLength="6"
                         value={password} 
                         onChange={e => onChange(e) }
-                        required
+                        
                     />
                 </div>
                 <div className="form-group">
@@ -60,7 +60,7 @@ const Register = ({ setAlert, register }) => {
                         name="password2"
                         minLength="6"
                         value={password2} onChange={e => onChange(e) }
-                        required
+                        
                     />
                 </div>
                 <input type="submit" className="btn btn-primary" value="Register" />

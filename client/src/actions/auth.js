@@ -15,26 +15,23 @@ export const register = ({ name, email, password }) => async dispatch => {
     const body = JSON.stringify({ name, email, password })
 
     try {
-        const res = axios.post('http://dev.saurab.me/api/users', body, config)
-        console.log(res)
+        const res = await axios.post('http://dev.saurab.me/api/users', body, config)
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         })
     } catch (err) {
-
+        
         const errors = err.response.data.errors;
         if(errors){
-            console.log(errors)
             errors.forEach(error=>{
-                setAlert(error, 'danger', 3000)
+                dispatch(setAlert(error.msg, 'danger', 5000))
             })
         }
 
         dispatch({
             type: REGISTER_FAIL
         })
-        console.log(errors)
     }
 
 }
