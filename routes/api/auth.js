@@ -11,7 +11,7 @@ const { authValidation, validate } = require('../../middleware/validator');
 
 const User = require('../../models/User')
 
-// @route       /api/auth 
+// @route       GET /api/auth 
 // @desc        get user
 // @access      Public
 
@@ -25,6 +25,10 @@ router.get('/', auth, async (req, res)=>{
     }
 })
 
+// @route       POST /api/auth 
+// @desc        get user
+// @access      Public
+
 router.post('/', authValidation(), validate, async (req, res)=>{
     
     const { email, password } = req.body
@@ -35,7 +39,6 @@ router.post('/', authValidation(), validate, async (req, res)=>{
             return res.status(400).json({errors: [{ msg: "User doesn't exists."}]})
         }
 
-        console.log(email)
         isMatch = await bcrypt.compare(password, user.password)
 
         if(!isMatch)

@@ -1,18 +1,31 @@
-import React, {Fragment} from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Alert from './components/layout/Alert';
+import Dashboard from './components/dashboard/Dashboard';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-
+import PrivateRoute from './components/routing/PrivateRoute';
+import { loadUser } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
 
 //redux
 import { Provider } from 'react-redux';
 import store from './store';
 
+if(localStorage.token){
+  setAuthToken(localStorage.token)
+}
+
 const App = () => {
+
+  useEffect(() => {
+    console.log("localStorage -> ", localStorage.token)
+    store.dispatch(loadUser())
+  }, []) //empty braces to make the hooks run only once
+
   return (
     <Provider store={store}>
     <Router>
@@ -24,6 +37,8 @@ const App = () => {
           <Switch>
             <Route exact path='/register' component={Register}></Route>
             <Route exact path='/login' component={Login}></Route>
+            <PrivateRoute exact path='/dashboard' component={Dashboard}></PrivateRoute>
+
             {/* <PrivateRoute exact path='/protected'> I am protected. </PrivateRoute> */}
           </Switch>
         </section>
