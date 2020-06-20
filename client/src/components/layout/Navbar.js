@@ -3,20 +3,28 @@ import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 import PropTypes from "prop-types";
+import Splash from './Splash';
 
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
     const authLinks = (
-        <ul>                
+        <ul>
+            <li>
+                <Link to="/dashboard"> 
+                    <i className="fa fa-user"></i> 
+                    <span className="hide-sm">Dashboard</span>
+                </Link>
+            </li>  
+            &nbsp; &nbsp;
             <li>
                 <a href="#!" onClick={logout}>
 
-                    <i className="fas fa-sign-out-alt"></i>{' '}
+                    <i className="fa fa-sign-out"></i>{' '}
                     <span className="hide-sm">Logout</span>
 
                 </a>
-            </li>               
+            </li>
         </ul>
     );
 
@@ -36,16 +44,20 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </ul>
     );
 
-    return (
-        <nav className="navbar bg-dark">
-            <h1>
-                <Link to="/">
-                    <i className="fas fa-code"></i> DevConnector
-                </Link>
-            </h1>            
-            { !loading && (<Fragment> { isAuthenticated ? authLinks: guestLinks } </Fragment>)}
-        </nav>
-        
+    const splash = (<Splash/>)
+
+    return (        
+        <Fragment>
+            { loading ? <Splash/> : false}
+            <nav className="navbar bg-dark">
+                <h1>
+                    <Link to="/">
+                        <i className="fa fa-code"></i> DevConnector
+                    </Link>
+                </h1> 
+                { !loading && (<Fragment> { isAuthenticated ? authLinks: guestLinks } </Fragment>)}
+            </nav>  
+        </Fragment>
     )
 }
 

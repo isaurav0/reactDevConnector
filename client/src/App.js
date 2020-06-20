@@ -22,7 +22,6 @@ if(localStorage.token){
 const App = () => {
 
   useEffect(() => {
-    console.log("localStorage -> ", localStorage.token)
     store.dispatch(loadUser())
   }, []) //empty braces to make the hooks run only once
 
@@ -38,7 +37,6 @@ const App = () => {
             <Route exact path='/register' component={Register}></Route>
             <Route exact path='/login' component={Login}></Route>
             <PrivateRoute exact path='/dashboard' component={Dashboard}></PrivateRoute>
-
             {/* <PrivateRoute exact path='/protected'> I am protected. </PrivateRoute> */}
           </Switch>
         </section>

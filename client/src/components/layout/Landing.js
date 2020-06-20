@@ -1,8 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from "prop-types";
+import Splash from './Splash';
 
-const Landing = () => {
-    return (
+const Landing = ({ isAuthenticated, loading }) => {
+
+    if(isAuthenticated){
+        return <Redirect to='/dashboard' />
+    }
+
+    const landingScreen = (
         <section className="landing">
             <div className="dark-overlay">
                 <div className="landing-inner">
@@ -21,8 +29,24 @@ const Landing = () => {
                 </div>
                 </div>
             </div>
-    </section>
+        </section>
+    )
+
+    return (
+        <React.Fragment>    
+        { loading ? <Splash/>: landingScreen}
+        </React.Fragment>
     )
 }
 
-export default Landing
+Landing.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading
+})
+
+export default connect(mapStateToProps)(Landing)
