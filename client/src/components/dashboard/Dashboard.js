@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {getCurrentProfile} from '../../actions/profile';
 import Splash from '../layout/Splash';
 
-const Dashboard = ({ getCurrentProfile, auth: { loading, isAuthenticated }, profile, auth}) => {
+const Dashboard = ({ getCurrentProfile, auth: { isAuthenticated, user }, profile: { profile, loading }}) => {
 
     useEffect(()=>{
         getCurrentProfile();
@@ -14,18 +14,16 @@ const Dashboard = ({ getCurrentProfile, auth: { loading, isAuthenticated }, prof
         <React.Fragment>
             <h1 className="large primary-text"> Dashboard </h1>
             <p className="lead">
-                <i className="fa fa-user" /> 
-                Welcome {auth.user.name}             
+                <i className="fa fa-user" />
+                Welcome {user.name}
             </p>            
         </React.Fragment>
     )
-
-    console.log(auth)
     
 
     return (
         <React.Fragment>    
-        { loading && isAuthenticated? <Splash/>: dashboardScreen}
+        { loading && profile===null ? <Splash/>: dashboardScreen}
         </React.Fragment>
     )
 }
