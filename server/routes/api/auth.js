@@ -21,7 +21,7 @@ router.get('/', auth, async (req, res)=>{
         res.json(user)
     }
     catch(err){
-        throw err;
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -56,7 +56,7 @@ router.post('/', authValidation(), validate, async (req, res)=>{
     }
     catch(err){
         console.log(err)
-        res.status(500).json({ "error": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 
 })

@@ -21,13 +21,13 @@ router.get('/me', auth, async (req, res)=>{
         var profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar'])
 
         if(!profile)
-            return res.status(400).json({ msg: "No profile of user"})
+            return res.status(400).json({ errors: [{ "msg": "No profile of user" }] })
 
         return res.status(200).json({ profile })
     }
     catch(err){
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ errors: [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -83,13 +83,13 @@ router.post('/', [ auth, profileValidation(), validate ], async (req, res)=>{
         }
         catch(err){
             console.log(err)
-            res.status(500).json({"msg": "Internal Server Error"})
+            res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
         }
 
     }
     catch(err){
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }    
 })
 
@@ -103,7 +103,7 @@ router.get('/', async (req, res) => {
         return res.status(200).json(profiles)
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -117,14 +117,14 @@ router.get('/user/:user_id', async (req, res) => {
         user_id = req.params['user_id']
         const profile = await Profile.findOne({ user: user_id }).populate('user', ['name', 'avatar', 'email'])
         if(!profile)
-            return res.status(404).json({"msg": "Profile not found."})
+            return res.status(404).json({ errors: [{ "msg": "Profile Not Found." }] })
         return res.status(200).json(profile)
     } catch (err) {
         console.log(err)
         if(err.kind == 'ObjectId'){
-            return res.status(404).json({"msg": "Profile not found."})
+            return res.status(404).json({ errors: [{ "msg": "Profile Not Found." }] })
         }
-        return res.status(500).json({"msg": "Internal Server Error"})
+        return res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -143,7 +143,7 @@ router.delete('/', auth, async (req, res) => {
         return res.status(200).json({ msg: "User deleted."})
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -182,11 +182,11 @@ router.put('/education', [ auth, educationValidation(), validate ] , async (req,
             return res.status(200).send({msg: "Education Added."})
         } catch (err) {
             console.log(err)
-            return res.status(500).json({"msg": "Internal Server Error"})
+            return res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
         }
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -206,7 +206,7 @@ router.delete('/education/:edu_id', [ auth, educationValidation(), validate ] , 
         return res.status(200).send({msg: "Education Removed."})
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -237,11 +237,11 @@ router.put('/experience', [ auth, experienceValidation(), validate ] , async (re
             return res.status(200).send({msg: "Experience Added."})
         } catch (err) {
             // console.log(err)
-            return res.status(500).json({"msg": "Internal Server Error"})
+            return res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
         }
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -261,7 +261,7 @@ router.delete('/experience/:exp_id', [ auth, experienceValidation(), validate ] 
         return res.status(200).send({msg: "Experience Removed."})
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
@@ -282,13 +282,13 @@ router.get('/github/:username' , async (req, res) => {
         request(options, (err, response, body) => {
             if(err) console.log(err)
             if(response.statusCode != 200)
-                return res.status(404).json({msg: "Github Profile Not Found"})
+                return res.status(404).json({ errors: [{ "msg": "Github Profile Not Found." }] })
             return res.json(JSON.parse(body))
         })
 
     } catch (err) {
         console.log(err)
-        res.status(500).json({"msg": "Internal Server Error"})
+        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 })
 
