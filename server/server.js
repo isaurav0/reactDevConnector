@@ -21,7 +21,12 @@ app.use("/api/auth", require('./routes/api/auth'))
 app.use("/api/post", require('./routes/api/post'))
 
 app.get("*", (req, res)=>{
-    res.sendFile('index.html', { root: '../client/build/' });
+    try{
+        res.sendFile('index.html', { root: '../client/build/' });
+    }
+    catch(err){
+        res.send("Hello")
+    }
 })
 
 const PORT = process.env.PORT || 5000;
