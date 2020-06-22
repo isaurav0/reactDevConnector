@@ -1,4 +1,4 @@
-FROM node:12.18-stretch
+FROM node:13.12.0-alpine
 
 WORKDIR /usr/confluence
 
