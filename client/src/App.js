@@ -14,6 +14,9 @@ import setAuthToken from './utils/setAuthToken';
 //redux
 import { Provider } from 'react-redux';
 import store from './store';
+import CreateProfile from './components/profile-form/CreateProfile';
+import EditProfile from './components/profile-form/EditProfile';
+import AddEducation from './components/profile-form/AddEducation';
 
 if(localStorage.token){
   setAuthToken(localStorage.token)
@@ -37,6 +40,9 @@ const App = () => {
             <Route exact path='/register' component={Register}></Route>
             <Route exact path='/login' component={Login}></Route>
             <PrivateRoute exact path='/dashboard' component={Dashboard}></PrivateRoute>
+            <PrivateRoute exact path='/create-profile' component={CreateProfile}></PrivateRoute>
+            <PrivateRoute exact path='/edit-profile' component={EditProfile}></PrivateRoute>
+            <PrivateRoute exact path='/add-education' component={AddEducation}></PrivateRoute>
             {/* <PrivateRoute exact path='/protected'> I am protected. </PrivateRoute> */}
           </Switch>
         </section>

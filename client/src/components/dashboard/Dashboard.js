@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {getCurrentProfile} from '../../actions/profile';
 import Splash from '../layout/Splash';
+import DashboardActions from './DashboardActions';
 
 const Dashboard = ({ getCurrentProfile, auth: { isAuthenticated, user }, profile: { profile, loading }}) => {
 
@@ -11,20 +13,31 @@ const Dashboard = ({ getCurrentProfile, auth: { isAuthenticated, user }, profile
     }, [])
 
     const dashboardScreen = (
-        <React.Fragment>
+        <Fragment>
             <h1 className="large primary-text"> Dashboard </h1>
             <p className="lead">
                 <i className="fa fa-user" />
-                Welcome {user.name}
-            </p>            
-        </React.Fragment>
+                Welcome, {user && user.name }.<br/>                
+            </p>
+
+            { profile !== null  ? 
+                <Fragment>
+                    <DashboardActions></DashboardActions>
+                </Fragment> 
+            : 
+                <Fragment>
+                    You have not created a profile yet. Please add some info about you.<br/>
+                    <Link exact to='/create-profile' className="btn btn-primary my-1"> Create Profile </Link>
+                </Fragment>
+            }
+        </Fragment>
     )
     
 
     return (
-        <React.Fragment>    
+        <Fragment>    
         { loading && profile===null ? <Splash/>: dashboardScreen}
-        </React.Fragment>
+        </Fragment>
     )
 }
 
