@@ -17,6 +17,7 @@ import store from './store';
 import CreateProfile from './components/profile-form/CreateProfile';
 import EditProfile from './components/profile-form/EditProfile';
 import AddEducation from './components/profile-form/AddEducation';
+import AddExperience from './components/profile-form/AddExperience';
 
 if(localStorage.token){
   setAuthToken(localStorage.token)
@@ -43,6 +44,7 @@ const App = () => {
             <PrivateRoute exact path='/create-profile' component={CreateProfile}></PrivateRoute>
             <PrivateRoute exact path='/edit-profile' component={EditProfile}></PrivateRoute>
             <PrivateRoute exact path='/add-education' component={AddEducation}></PrivateRoute>
+            <PrivateRoute exact path='/add-experience' component={AddExperience}></PrivateRoute>
             {/* <PrivateRoute exact path='/protected'> I am protected. </PrivateRoute> */}
           </Switch>
         </section>
