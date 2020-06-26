@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEducation } from '../../actions/profile';
 
-const AddEducation = ({ addEducation }) => {
-
-    useEffect(()=>{
-
-    })
+const AddEducation = ({ addEducation, history }) => {
 
     const [formData, setFormData] = useState({
         'school':'',
@@ -30,15 +26,17 @@ const AddEducation = ({ addEducation }) => {
         description
     } = formData
 
-    const [checked, setCheck ] = useState(false)
-
     const onSubmit = e => {
         e.preventDefault()
-        addEducation(formData)
+        addEducation(formData, history)
     }
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]:e.target.value })
+    }
+
+    const onCheck = e => {
+        setFormData({...formData, current: !current})
     }
 
     return (
@@ -47,7 +45,7 @@ const AddEducation = ({ addEducation }) => {
                 Add Your Education
             </h1>
             <p className="lead">
-                <i className="fas fa-graduation-cap"></i> Add any school, bootcamp, etc that
+                <i className="fa fa-graduation-cap"></i> Add any school, bootcamp, etc that
                 you have attended
             </p>
             <small>* = required field</small>
@@ -77,7 +75,7 @@ const AddEducation = ({ addEducation }) => {
                 </div>
                 <div className="form-group">
                     <p>
-                        <input type="checkbox" name="current" value={current} onClick={e => { setCheck(!checked); onChange(e); }} /> Current School or Bootcamp
+                        <input type="checkbox" name="current" onClick={e => onCheck(e)} /> Current School or Bootcamp
                     </p>
                 </div>
                 <div className="form-group">
@@ -103,4 +101,4 @@ AddEducation.propTypes = ({
     addEducation: PropTypes.func.isRequired,
 })
 
-export default connect(null, { addEducation })(AddEducation)
+export default connect(null, { addEducation })(withRouter(AddEducation))

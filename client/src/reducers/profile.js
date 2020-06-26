@@ -1,4 +1,4 @@
-import {GET_PROFILE, PROFILE_ERROR, REMOVE_PROFILE} from '../actions/types'
+import {GET_PROFILE, PROFILE_ERROR, REMOVE_PROFILE, PROFILE_UPDATE} from '../actions/types'
 const initialState = {
     profile: null,
     profiles: [],
@@ -32,6 +32,12 @@ export default function(state = initialState, action) {
                 profiles: [],
                 repos: [],
                 loading: false
+            }
+
+        case PROFILE_UPDATE:
+            return { 
+                ...state, 
+                profile: payload.profile,
             }
 
         default:

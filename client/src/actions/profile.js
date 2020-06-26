@@ -4,6 +4,7 @@ import { setAlert } from './alert';
 import {
     GET_PROFILE,
     PROFILE_ERROR,
+    PROFILE_UPDATE
 } from './types';
 
 
@@ -76,13 +77,12 @@ export const updateProfile = (formData, history, edit=false) => async dispatch =
 
 
 //add education
-export const addEducation = (formData, history, edit=false) => async dispatch => {
+export const addEducation = (formData, history) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
-    console.log("add education called.")
 
     const body = JSON.stringify(formData)
 
@@ -90,6 +90,8 @@ export const addEducation = (formData, history, edit=false) => async dispatch =>
         const res = await axios.put('/api/profile/education', body, config)
 
         dispatch(setAlert('Education Added.', 'success'))
+
+        history.push('/dashboard')
         
     } catch (err) {
 
