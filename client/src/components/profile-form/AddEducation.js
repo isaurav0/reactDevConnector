@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, BrowserRouter as Router  } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEducation } from '../../actions/profile';
+import Alert from '../layout/Alert';
 
 const AddEducation = ({ addEducation, history }) => {
 
@@ -29,6 +30,7 @@ const AddEducation = ({ addEducation, history }) => {
     const onSubmit = e => {
         e.preventDefault()
         addEducation(formData, history)
+        window.scrollTo(0,0)
     }
 
     const onChange = e => {
@@ -37,10 +39,14 @@ const AddEducation = ({ addEducation, history }) => {
 
     const onCheck = e => {
         setFormData({...formData, current: !current})
+        if(current){
+            document.getElementById('')
+        }
     }
 
     return (
         <React.Fragment>
+
             <h1 className="large text-primary">
                 Add Your Education
             </h1>
@@ -55,7 +61,7 @@ const AddEducation = ({ addEducation, history }) => {
                         type="text"
                         placeholder="* School or Bootcamp"
                         name="school"
-                        onChange={e => onChange(e) } 
+                        onChange={e => onChange(e) }
                     />
                 </div>
                 <div className="form-group">
@@ -80,7 +86,7 @@ const AddEducation = ({ addEducation, history }) => {
                 </div>
                 <div className="form-group">
                     <h4>To Date</h4>
-                    <input type="date" name="to"  onChange={e => onChange(e) }/>
+                    <input type="date" name="to" onChange={e => onChange(e) } className={ `disabled-${current}` } tabIndex="-1" />
                 </div>
                 <div className="form-group">
                     <textarea

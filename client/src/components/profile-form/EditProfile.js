@@ -1,8 +1,9 @@
 import React, { useState, Fragment,useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, withRouter, Link} from 'react-router-dom';
+import {Redirect, withRouter, Link, Route, BrowserRouter as Router} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateProfile, getCurrentProfile } from '../../actions/profile';
+import Alert from '../layout/Alert';
 
 
 const EditProfile = ({updateProfile, getCurrentProfile, history, profile: { loading, profile } }) => {
@@ -64,7 +65,7 @@ const EditProfile = ({updateProfile, getCurrentProfile, history, profile: { load
         console.log(formData)
         e.preventDefault()
         updateProfile(formData, history, true)
-        console.log(updateProfile)
+        window.scrollTo(0,0)
     }
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })

@@ -104,3 +104,33 @@ export const addEducation = (formData, history) => async dispatch => {
         }
     }
 }
+
+
+//add experience
+export const addExperience = (formData, history) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify(formData)
+
+    try {        
+        const res = await axios.put('/api/profile/experience', body, config)
+
+        dispatch(setAlert('Experience Added.', 'success'))
+
+        history.push('/dashboard')
+        
+    } catch (err) {
+
+        console.log(err)
+        const errors = err.response.data.errors;
+        if(errors){
+            errors.forEach(error=>{
+                dispatch(setAlert(error.msg, 'danger', 5000))
+            })
+        }
+    }
+}
