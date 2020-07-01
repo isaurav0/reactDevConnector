@@ -196,7 +196,7 @@ router.put('/education', [ auth, educationValidation(), validate ] , async (req,
 // @desc        Add profile education
 // @access      private
 
-router.delete('/education/:edu_id', [ auth, educationValidation(), validate ] , async (req, res) => {
+router.delete('/education/:edu_id', auth , async (req, res) => {
     try {
         const edu_id = req.params['edu_id']
         const profile = await Profile.findOne({ user: req.user.id });
@@ -251,7 +251,7 @@ router.put('/experience', [ auth, experienceValidation(), validate ] , async (re
 // @desc        Add profile experience
 // @access      private
 
-router.delete('/experience/:exp_id', [ auth, experienceValidation(), validate ] , async (req, res) => {
+router.delete('/experience/:exp_id', auth , async (req, res) => {
     try {
         const exp_id = req.params['exp_id']
         const profile = await Profile.findOne({ user: req.user.id });

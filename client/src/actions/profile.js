@@ -64,7 +64,7 @@ export const updateProfile = (formData, history, edit=false) => async dispatch =
         const errors = err.response.data.errors;
         if(errors){
             errors.forEach(error=>{
-                dispatch(setAlert(error.msg, 'danger', 5000))
+                dispatch(setAlert(error.msg, 'danger', 2000))
             })
         }
 
@@ -100,7 +100,7 @@ export const addEducation = (formData, history) => async dispatch => {
         const errors = err.response.data.errors;
         if(errors){
             errors.forEach(error=>{
-                dispatch(setAlert(error.msg, 'danger', 5000))
+                dispatch(setAlert(error.msg, 'danger', 2000))
             })
         }
     }
@@ -130,7 +130,52 @@ export const addExperience = (formData, history) => async dispatch => {
         const errors = err.response.data.errors;
         if(errors){
             errors.forEach(error=>{
-                dispatch(setAlert(error.msg, 'danger', 5000))
+                dispatch(setAlert(error.msg, 'danger', 2000))
+            })
+        }
+    }
+}
+
+
+//delete experience
+export const deleteExperience = id => async dispatch => {
+
+    try {        
+        const res = await axios.delete(`/api/profile/experience/${id}`)
+
+        window.location.reload()
+
+        dispatch(setAlert(res.data.msg, 'success', 2000))
+
+    } catch (err) {
+
+        console.log(err)
+        const errors = err.response.data.errors;
+        if(errors){
+            errors.forEach(error=>{
+                dispatch(setAlert(error.msg, 'danger', 2000))
+            })
+        }
+    }
+}
+
+//delete education
+export const deleteEducation = id => async dispatch => {
+
+    try {        
+        const res = await axios.delete(`/api/profile/education/${id}`)
+
+        window.location.reload()
+
+        dispatch(setAlert(res.data.msg, 'success', 2000))
+
+    } catch (err) {
+
+        console.log(err)
+        const errors = err.response.data.errors;
+        if(errors){
+            errors.forEach(error=>{
+                dispatch(setAlert(error.msg, 'danger', 2000))
             })
         }
     }
