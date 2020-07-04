@@ -4,7 +4,9 @@ import { setAlert } from './alert';
 import {
     GET_PROFILE,
     PROFILE_ERROR,
-    PROFILE_UPDATE
+    REMOVE_PROFILE,
+    GET_PROFILES,
+    GET_REPOS
 } from './types';
 
 
@@ -19,7 +21,6 @@ export const getCurrentProfile = () => async dispatch => {
 
     try{
         const res = await axios.get("/api/profile/me", config)
-        console.log(res)
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -32,6 +33,67 @@ export const getCurrentProfile = () => async dispatch => {
         })
     }
 }
+
+//Get all user's profiles
+export const getAllProfiles = () => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    dispatch({
+        type: REMOVE_PROFILE
+    })
+
+    try{
+        const res = await axios.get("/api/profile", config)
+        
+        console.log(res)
+
+        dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        })
+
+    } catch (err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: err, status: err }
+        })
+    }
+}
+
+//Get profiles by id
+export const getProfileById = userId => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    dispatch({
+        type: REMOVE_PROFILE
+    })
+
+    try{
+        const res = await axios.get(`/api/profile/${userId}`, config)
+        
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+
+    } catch (err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: err, status: err }
+        })
+    }
+}
+
 
 //create or update profile
 
@@ -88,7 +150,7 @@ export const addEducation = (formData, history) => async dispatch => {
     const body = JSON.stringify(formData)
 
     try {        
-        const res = await axios.put('/api/profile/education', body, config)
+        await axios.put('/api/profile/education', body, config)
 
         dispatch(setAlert('Education Added.', 'success'))
 
@@ -118,8 +180,7 @@ export const addExperience = (formData, history) => async dispatch => {
     const body = JSON.stringify(formData)
 
     try {        
-        const res = await axios.put('/api/profile/experience', body, config)
-
+        await axios.put('/api/profile/experience', body, config)
         dispatch(setAlert('Experience Added.', 'success'))
 
         history.push('/dashboard')
@@ -180,3 +241,42 @@ export const deleteEducation = id => async dispatch => {
         }
     }
 }
+
+export const deleteAccount = () => async dispatch => {
+
+    window.prompt("Are you sure you want to delete the profile?")
+
+    try {
+        await axios.delete(`/api/profile`)
+        dispatch({
+            type: REMOVE_PROFILE
+        })
+    } catch (err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        })
+    }
+}
+
+//Get github repos by id
+export const getGithubRepo = username => async dispatch => {
+
+
+    try{
+        const res = await axios.get(`/api/profile/github/${username}`)
+        
+        dispatch({
+            type: GET_REPOS,
+            payload: res.data
+        })
+
+    } catch (err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: err, status: err }
+        })
+    }
+}
+
+

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link, withRouter, BrowserRouter as Router  } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addEducation } from '../../actions/profile';
-import Alert from '../layout/Alert';
 
 const AddEducation = ({ addEducation, history }) => {
 
@@ -17,15 +16,7 @@ const AddEducation = ({ addEducation, history }) => {
         'description': ''
     })
 
-    const {
-        school,
-        degree,    
-        fieldofstudy,
-        date,
-        current,
-        to,
-        description
-    } = formData
+    const { current } = formData
 
     const onSubmit = e => {
         e.preventDefault()

@@ -1,10 +1,8 @@
 import React, { useState, Fragment,useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Redirect, withRouter, Link, Route, BrowserRouter as Router} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateProfile, getCurrentProfile } from '../../actions/profile';
-import Alert from '../layout/Alert';
-
 
 const EditProfile = ({updateProfile, getCurrentProfile, history, profile: { loading, profile } }) => {
 

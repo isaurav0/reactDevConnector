@@ -11,17 +11,23 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     const authLinks = (
         <ul>
             <li>
+                <Link to="/profiles"> 
+                    <i className="fa fa-connectdevelop"></i> 
+                    <span className="hide-sm">&nbsp;Developers</span>
+                </Link>
+            </li> 
+            <li>
                 <Link to="/dashboard"> 
                     <i className="fa fa-user"></i> 
-                    <span className="hide-sm">Dashboard</span>
+                    <span className="hide-sm">&nbsp;Dashboard</span>
                 </Link>
-            </li>  
+            </li>
             &nbsp; &nbsp;
             <li>
                 <a href="#!" onClick={logout}>
 
                     <i className="fa fa-sign-out"></i>{' '}
-                    <span className="hide-sm">Logout</span>
+                    <span className="hide-sm">&nbsp;Logout</span>
 
                 </a>
             </li>
@@ -43,8 +49,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
             </li>                
         </ul>
     );
-
-    const splash = (<Splash/>)
 
     return (        
         <Fragment>

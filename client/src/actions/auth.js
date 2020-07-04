@@ -3,9 +3,6 @@ import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 
-import { connect } from 'react-redux';
-
-
 //Load User
 export const loadUser = () => async dispatch =>{
     if(localStorage.token){

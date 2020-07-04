@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, withRouter, Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateProfile } from '../../actions/profile';
 

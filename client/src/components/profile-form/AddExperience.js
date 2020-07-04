@@ -1,9 +1,8 @@
 import React, { useState, Fragment } from 'react';
-import { Link, withRouter, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addExperience } from '../../actions/profile';
-import Alert from '../layout/Alert';
 
 const AddExperience = ({ addExperience, history }) => {
 
@@ -17,15 +16,7 @@ const AddExperience = ({ addExperience, history }) => {
 	    "description": ""
     })
 
-    const {
-        title,
-	    company,
-	    location,
-	    from,
-	    to,
-	    current,
-	    description
-    } = formData
+    const { current } = formData
 
     const onSubmit = e => {
         e.preventDefault()        
