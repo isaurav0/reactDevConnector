@@ -12,7 +12,7 @@ const Dashboard = ({ getCurrentProfile, auth: { isAuthenticated, user }, profile
 
     useEffect(()=>{
         getCurrentProfile();
-    }, [])
+    }, [getCurrentProfile])
 
     const dashboardScreen = (
         <Fragment>

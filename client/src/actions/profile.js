@@ -26,6 +26,8 @@ export const getCurrentProfile = () => async dispatch => {
             payload: res.data
         })
 
+        console.log("getting profile")
+
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
@@ -74,10 +76,6 @@ export const getProfileById = userId => async dispatch => {
         }
     }
 
-    dispatch({
-        type: REMOVE_PROFILE
-    })
-
     try{
         const res = await axios.get(`/api/profile/${userId}`, config)
         
@@ -112,7 +110,7 @@ export const updateProfile = (formData, history, edit=false) => async dispatch =
         
         dispatch({
             type: GET_PROFILE,
-            payload: res.data.profile
+            payload: res.data
         })
 
         dispatch(setAlert(edit ? 'Profile Updated.': 'Profile Edited.', 'success'))
@@ -121,7 +119,6 @@ export const updateProfile = (formData, history, edit=false) => async dispatch =
             history.push('/dashboard')
         }
     } catch (err) {
-
         console.log(err)
         const errors = err.response.data.errors;
         if(errors){
