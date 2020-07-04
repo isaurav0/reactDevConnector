@@ -9,7 +9,7 @@ const ProfileItem = ( { profile }) => {
                         <h2>{ profile.user.name} </h2>
                         <p> { profile.status } at { profile.company } </p>
                         <p> { profile.location } </p>
-                        <Link to="/profile" className="btn btn-primary">View Profile</Link>
+                        <Link to={`/profile/${profile.user._id}`} className="btn btn-primary">View Profile</Link>
                     </div>
 
                     <ul>
@@ -18,7 +18,7 @@ const ProfileItem = ( { profile }) => {
                             return (
                                 <li className="text-primary">
                                     <i className="fa fa-check"></i> {skill}
-                                </li>        
+                                </li>
                             )
                         })
                     }

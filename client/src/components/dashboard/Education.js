@@ -56,7 +56,7 @@ Education.propTypes = ({
 })
 
 const mapStateToProps = state => ({
-    Educations: state.profile.profile.education 
+    Educations: state.profile.profile.education
 })
 
 export default connect(mapStateToProps, { deleteEducation, deleteAccount })(Education)

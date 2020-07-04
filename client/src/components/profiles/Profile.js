@@ -5,20 +5,20 @@ import Splash from '../layout/Splash';
 import { getProfileById } from '../../actions/profile';
 
 
-const Profile = ({ match, getProfileById, profile, loading, auth }) => {
+const Profile = ({ match, getProfileById, profile: { profile }, loading, auth }) => {
     
     useEffect(() => {
-        getProfileById(match.params.id);
-        console.log(match.params.id)
-    },[])
+        getProfileById(match.params.id);        
+        console.log(profile)
+    },[loading])
 
     const profilePage = (
-        <h1>Hello {match.params.id}</h1>
+    <h1>Hello  </h1>
     )
 
     return (
         <Fragment>
-            { loading || profile===null ? <Splash /> : profilePage }
+            { loading || profile.user ===null ? <Splash /> : profilePage }
         </Fragment>
     )
 }

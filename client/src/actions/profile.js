@@ -25,9 +25,6 @@ export const getCurrentProfile = () => async dispatch => {
             type: GET_PROFILE,
             payload: res.data
         })
-
-        console.log("getting profile")
-
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
@@ -45,14 +42,8 @@ export const getAllProfiles = () => async dispatch => {
         }
     }
 
-    dispatch({
-        type: REMOVE_PROFILE
-    })
-
     try{
         const res = await axios.get("/api/profile", config)
-        
-        console.log(res)
 
         dispatch({
             type: GET_PROFILES,
@@ -77,11 +68,13 @@ export const getProfileById = userId => async dispatch => {
     }
 
     try{
-        const res = await axios.get(`/api/profile/${userId}`, config)
+        const res = await axios.get(`/api/profile/user/${userId}`, config)
         
+        const data = { profile: res.data }
+
         dispatch({
             type: GET_PROFILE,
-            payload: res.data
+            payload: data
         })
 
     } catch (err) {
@@ -101,7 +94,6 @@ export const updateProfile = (formData, history, edit=false) => async dispatch =
             'Content-Type': 'application/json'
         }
     }
-    console.log("update profile called ")
 
     const body = JSON.stringify(formData)
 
