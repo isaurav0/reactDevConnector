@@ -7,13 +7,15 @@ import { Link } from 'react-router-dom';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
+import ProfileEducation from './ProfileEducation';
+import ProfileGithub from './ProfileGithub';
 
 
-const Profile = ({ match, getProfileById, profile: { profile }, loading, auth }) => {
+const Profile = ({ match, getProfileById,profile: { profile }, loading, auth }) => {
     
     useEffect(() => {
-        getProfileById(match.params.id);
-    },[loading])  
+        getProfileById(match.params.id);        
+    },[loading])
 
     return (
         <Fragment>
@@ -39,6 +41,14 @@ const Profile = ({ match, getProfileById, profile: { profile }, loading, auth })
 
                 <div class="profile-exp bg-white p-2">
                     <ProfileExperience profile={profile} />
+                </div>
+
+                <div class="profile-edu bg-white p-2">
+                    <ProfileEducation profile={profile} />
+                </div>
+
+                <div class="profile-github">
+                    <ProfileGithub username={profile.githubusername} />
                 </div>
 
             </Fragment>
