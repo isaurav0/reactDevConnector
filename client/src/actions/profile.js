@@ -67,6 +67,10 @@ export const getProfileById = userId => async dispatch => {
         }
     }
 
+    dispatch({
+        type: REMOVE_PROFILE
+    })
+
     try{
         const res = await axios.get(`/api/profile/user/${userId}`, config)
         

@@ -3,22 +3,46 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Splash from '../layout/Splash';
 import { getProfileById } from '../../actions/profile';
+import { Link } from 'react-router-dom';
+import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
+import ProfileExperience from './ProfileExperience';
 
 
 const Profile = ({ match, getProfileById, profile: { profile }, loading, auth }) => {
     
     useEffect(() => {
-        getProfileById(match.params.id);        
-        console.log(profile)
-    },[loading])
-
-    const profilePage = (
-    <h1>Hello  </h1>
-    )
+        getProfileById(match.params.id);
+    },[loading])  
 
     return (
         <Fragment>
-            { loading || profile.user ===null ? <Splash /> : profilePage }
+            { ( loading || profile==null ) ? <Splash /> 
+            : 
+            <Fragment>
+                <Link to="/profiles" className='btn btn-light'>Back to Profiles</Link>
+
+                { 
+                auth.isAuthenticated && auth.loading == false && auth.user._id === profile.user._id 
+                    && (
+                    <Link to="/edit-profile" className='btn btn-dark'>Edit Profile</Link>
+                )
+                }
+
+                <div className="profile-grid my-1">
+                    <ProfileTop profile={profile}/>
+                </div>
+
+                <div className="profile-about bg-light p-2">
+                    <ProfileAbout profile={profile}/>
+                </div>
+
+                <div class="profile-exp bg-white p-2">
+                    <ProfileExperience profile={profile} />
+                </div>
+
+            </Fragment>
+            }
         </Fragment>
     )
 }

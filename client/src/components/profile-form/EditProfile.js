@@ -16,13 +16,18 @@ const EditProfile = ({updateProfile, getCurrentProfile, history, profile: { load
             bio: loading || !profile.bio ? '': profile.bio,
             status: loading || !profile.status ? '': profile.status,
             githubusername: loading || !profile.githubusername ? '': profile.githubusername,
-            skills: loading || !profile.skills ? '': profile.skills.join(',') ,
-            youtube: loading || !profile.youtube ? '': profile.youtube,
-            facebook: loading || !profile.facebook ? '': profile.facebook,
-            twitter: loading || !profile.twitter ? '': profile.twitter,
-            instagram: loading || !profile.instagram ? '': profile.instagram,
-            linkedin: loading || !profile.linkedin ? '': profile.linkedin
+            skills: loading || !profile.skills ? '': profile.skills.join(',') ,            
         })
+
+        if(profile && profile.social){
+            setFormData({
+                youtube: loading || !profile.social.youtube ? '': profile.social.youtube,
+                facebook: loading || !profile.social.facebook ? '': profile.social.facebook,
+                twitter: loading || !profile.social.twitter ? '': profile.social.twitter,
+                instagram: loading || !profile.social.instagram ? '': profile.social.instagram,
+                linkedin: loading || !profile.social.linkedin ? '': profile.social.linkedin
+            })
+        }
 
         return 
     }, [loading]);
