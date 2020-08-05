@@ -14,3 +14,5 @@ export const REMOVE_PROFILE = 'REMOVE_PROFILE';
 export const PROFILE_UPDATE = 'PROFILE_UPDATE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const GET_REPOS = 'GET_REPOS';
+export const GET_POSTS = 'GET_POSTS';
+export const ADD_POST = 'ADD_POST';

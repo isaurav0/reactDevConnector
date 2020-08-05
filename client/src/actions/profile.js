@@ -255,7 +255,6 @@ export const deleteAccount = () => async dispatch => {
 //Get github repos by id
 export const getGithubRepo = username => async dispatch => {
 
-
     try{
         const res = await axios.get(`/api/profile/github/${username}`)
         

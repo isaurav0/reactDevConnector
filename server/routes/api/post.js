@@ -11,8 +11,6 @@ const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 
-
-
 // @route       POST /api/post
 // @desc        Create post
 // @access      private
