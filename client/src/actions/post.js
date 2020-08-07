@@ -40,7 +40,7 @@ export const addPost = (name, text) => async dispatch => {
         
         dispatch({
             type: ADD_POST,
-            payload: res.data
+            payload: res.data['post']
         })
 
         dispatch(setAlert(res.data.msg, 'success'))
@@ -56,3 +56,32 @@ export const addPost = (name, text) => async dispatch => {
     }
 }
 
+
+// Add reply to a post
+export const addReply = (post_id, text) => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({text})
+
+    try {        
+        const res = await axios.post(`/api/post/comment/${post_id}`, body, config)
+
+        dispatch(setAlert(res.data.msg, 'success'))
+
+        getAllPosts()
+
+    } catch (err) {
+        console.log(err)
+        const errors = err.response.data.errors;
+        if(errors){
+            errors.forEach(error=>{
+                dispatch(setAlert(error.msg, 'danger', 2000))
+            })
+        }
+    }
+}
