@@ -42,7 +42,7 @@ router.post('/', authValidation(), validate, async (req, res)=>{
         isMatch = await bcrypt.compare(password, user.password)
 
         if(!isMatch)
-            res.status(401).json({errors: [{ msg: "Incorrect Password."}]})
+            return res.status(401).json({errors: [{ msg: "Incorrect Password."}]})
 
         const payload = {
             user: {
@@ -52,11 +52,11 @@ router.post('/', authValidation(), validate, async (req, res)=>{
 
         const token = await jwt.sign(payload, secret, { expiresIn: 360000 })
 
-        res.status(200).json({ token })
+        return res.status(200).json({ token })
     }
     catch(err){
         console.log(err)
-        res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
+        return res.status(500).json({ "errors": [ {"msg" : "Internal Server Error"}] })
     }
 
 })

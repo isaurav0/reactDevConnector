@@ -14,10 +14,9 @@ const Landing = ({ isAuthenticated, loading }) => {
         <section className="landing">
             <div className="dark-overlay">
                 <div className="landing-inner">
-                <h1 className="x-large">Developer Connector</h1>
+                <h1 className="x-large">Automata </h1>
                 <p className="lead">
-                    Create a developer profile/portfolio, share posts and get help from
-                    other developers
+                    A portfolio sharing platform for coders, programmers, creators and inventors
                 </p>
                 <div className="buttons">
                     <Link to="/register" className="btn btn-primary">

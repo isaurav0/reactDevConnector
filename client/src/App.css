@@ -44,6 +44,11 @@ img {
   margin-bottom: 3rem;
 }
 
+.container:empty{
+  height: 0px;
+  margin: 0px !important;
+}
+
 /* Text Styles*/
 .x-large {
   font-size: 4rem;
@@ -333,7 +338,7 @@ button {
 /* Landing Page */
 .landing {
   position: relative;
-  background: url('./img/showcase.jpg') no-repeat center center/cover;
+  background: url('./img/csguy.jpg') no-repeat center center/cover;
   height: 100vh;
 }
 

@@ -276,6 +276,7 @@ router.delete('/experience/:exp_id', auth , async (req, res) => {
 // @access      Public
 
 router.get('/github/:username' , async (req, res) => {
+    console.log("Fetching github profile")
     try {
         const options = {
             uri: `https://api.github.com/users/${req.params['username']}/repos?per_page=5&sort=creat

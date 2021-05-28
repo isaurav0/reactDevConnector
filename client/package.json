@@ -17,7 +17,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "webpack": "4.41.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://dev.saurab.me"
+  "proxy": "http://localhost:5000"
 }
